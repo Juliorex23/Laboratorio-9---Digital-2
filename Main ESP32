@@ -5,6 +5,7 @@
 
 void setup() {
   Serial2.begin(115200);
+//Iniciar el Serial para mostrar informacion en el monitor
   Serial.begin(115200);
   pinMode (pot1, INPUT);
   pinMode(pot2, INPUT);
@@ -22,15 +23,18 @@ void loop() {
       int potValue = analogRead(pot1);
       Serial.print("Valor potenciómetro 1: ");
       Serial.println(potValue); // Imprimir el valor leído
+      //Hacer un mapeo del voltaje leído para tener valores de 0 - 15
       response = map(potValue, 0, 4095, 0, 15);
     } else if (request == 2) {
       int potValue = analogRead(pot2);
       Serial.print("Valor potenciómetro 2: ");
       Serial.println(potValue); // Imprimir el valor leído
+      //Hacer un mapeo del voltaje leído para tener valores de 0-15
       response = map(potValue, 0, 4095, 0, 15);
     }
     
     Serial2.write(response);  // Enviar la respuesta al STM32
+    //Imprimir en el monitor los valores como guía de que se envió al STM32
     Serial.print("Response enviado: ");
     Serial.println(response);
   }
