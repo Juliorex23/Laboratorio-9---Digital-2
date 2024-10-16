@@ -1,0 +1,31 @@
+#include <Arduino.h>
+
+const int pot1Pin = 34;  // Pin analógico para el potenciómetro 1
+const int pot2Pin = 35;  // Pin analógico para el potenciómetro 2
+
+void setup() {
+  Serial2.begin(115200);
+  Serial.begin(115200);
+}
+
+void loop() {
+  if (Serial2.available() > 0) {
+    String requestS = Serial2.readString();  // Leer la solicitud del STM32
+    int request = requestS.toInt();
+    
+    uint8_t response = 0; // Variable para almacenar la respuesta
+
+    if (request == 1) {
+      // Leer el potenciómetro 1
+      int potValue = analogRead(pot1Pin);
+      response = map(potValue, 0, 4095, 0, 15);  // Mapear a 0-15
+    } else if (request == 2) {
+      // Leer el potenciómetro 2
+      int potValue = analogRead(pot2Pin);
+      response = map(potValue, 0, 4095, 0, 15);  // Mapear a 0-15
+    }
+
+    Serial2.write(response);  // Enviar la respuesta al STM32
+    Serial.write(response);
+  }
+}
