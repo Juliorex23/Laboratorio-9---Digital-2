@@ -1,3 +1,6 @@
+/*Universidad del Valle de Guatemala 
+/*Julio Roberto Pérez Díaz 221023
+/*Electrónica Digital 2
 #include <Arduino.h>
 
 #define pot1 34  // Pin analógico para el potenciómetro 1
