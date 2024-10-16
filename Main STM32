@@ -1,3 +1,6 @@
+/*Universidad del Valle de Guatemala 
+/*Julio Roberto Pérez Díaz 221023
+/*Electrónica Digital 2
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -291,6 +294,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+Función para encender los segmentos en cada caso de 0-F
 void imprimir7seg(uint8_t numero){
 	switch(numero){
 	case 0:
@@ -442,6 +446,7 @@ void imprimir7seg(uint8_t numero){
 	}
 
 }
+//Función para mostrar el valor leído en cada potenciómetro
 void mostrador(){
 	//Mostrar en display medición de potenciometro 1
 
@@ -459,6 +464,7 @@ void mostrador(){
 	   HAL_GPIO_WritePin(D2_GPIO_Port,D2_Pin, GPIO_PIN_RESET);
 
 }
+//Función para crear el efecto de multiplexado 
 void temporizacion(){
 	int contret=1000;       //Cargue con 1000 la variable CONTRET
 	   while (contret>0)       //Mientras que la variable CONTRET sea mayor que cero
