@@ -58,6 +58,7 @@ static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 void temporizacion();
 void mostrador();
+void UART1_start(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -269,11 +270,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : BTN2_Pin BTN1_Pin */
-  GPIO_InitStruct.Pin = BTN2_Pin|BTN1_Pin;
+  /*Configure GPIO pin : BTN2_Pin */
+  GPIO_InitStruct.Pin = BTN2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(BTN2_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : BTN1_Pin */
+  GPIO_InitStruct.Pin = BTN1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(BTN1_GPIO_Port, &GPIO_InitStruct);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
@@ -387,18 +394,18 @@ void imprimir7seg(uint8_t numero){
 	    break;
 	    case 11: // B
 	        HAL_GPIO_WritePin(A_GPIO_Port, A_Pin, GPIO_PIN_RESET);
-	        HAL_GPIO_WritePin(B_GPIO_Port, B_Pin, GPIO_PIN_SET);
+	        HAL_GPIO_WritePin(B_GPIO_Port, B_Pin, GPIO_PIN_RESET);
 	        HAL_GPIO_WritePin(C_GPIO_Port, C_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(D_GPIO_Port, D_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(E_GPIO_Port, E_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(F_GPIO_Port, F_Pin, GPIO_PIN_SET);
-	        HAL_GPIO_WritePin(G_GPIO_Port, G_Pin, GPIO_PIN_RESET);
+	        HAL_GPIO_WritePin(G_GPIO_Port, G_Pin, GPIO_PIN_SET);
 	    break;
 	    case 12: // C
 	        HAL_GPIO_WritePin(A_GPIO_Port, A_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(B_GPIO_Port, B_Pin, GPIO_PIN_RESET);
-	        HAL_GPIO_WritePin(C_GPIO_Port, C_Pin, GPIO_PIN_SET);
-	        HAL_GPIO_WritePin(D_GPIO_Port, D_Pin, GPIO_PIN_RESET);
+	        HAL_GPIO_WritePin(C_GPIO_Port, C_Pin, GPIO_PIN_RESET);
+	        HAL_GPIO_WritePin(D_GPIO_Port, D_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(E_GPIO_Port, E_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(F_GPIO_Port, F_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(G_GPIO_Port, G_Pin, GPIO_PIN_RESET);
@@ -410,21 +417,21 @@ void imprimir7seg(uint8_t numero){
 	        HAL_GPIO_WritePin(D_GPIO_Port, D_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(E_GPIO_Port, E_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(F_GPIO_Port, F_Pin, GPIO_PIN_RESET);
-	        HAL_GPIO_WritePin(G_GPIO_Port, G_Pin, GPIO_PIN_RESET);
+	        HAL_GPIO_WritePin(G_GPIO_Port, G_Pin, GPIO_PIN_SET);
 	    break;
 	    case 14: // E
 	        HAL_GPIO_WritePin(A_GPIO_Port, A_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(B_GPIO_Port, B_Pin, GPIO_PIN_RESET);
-	        HAL_GPIO_WritePin(C_GPIO_Port, C_Pin, GPIO_PIN_SET);
+	        HAL_GPIO_WritePin(C_GPIO_Port, C_Pin, GPIO_PIN_RESET);
 	        HAL_GPIO_WritePin(D_GPIO_Port, D_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(E_GPIO_Port, E_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(F_GPIO_Port, F_Pin, GPIO_PIN_SET);
-	        HAL_GPIO_WritePin(G_GPIO_Port, G_Pin, GPIO_PIN_RESET);
+	        HAL_GPIO_WritePin(G_GPIO_Port, G_Pin, GPIO_PIN_SET);
 	    break;
 	    case 15: // F
 	        HAL_GPIO_WritePin(A_GPIO_Port, A_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(B_GPIO_Port, B_Pin, GPIO_PIN_RESET);
-	        HAL_GPIO_WritePin(C_GPIO_Port, C_Pin, GPIO_PIN_SET);
+	        HAL_GPIO_WritePin(C_GPIO_Port, C_Pin, GPIO_PIN_RESET);
 	        HAL_GPIO_WritePin(D_GPIO_Port, D_Pin, GPIO_PIN_RESET);
 	        HAL_GPIO_WritePin(E_GPIO_Port, E_Pin, GPIO_PIN_SET);
 	        HAL_GPIO_WritePin(F_GPIO_Port, F_Pin, GPIO_PIN_SET);
